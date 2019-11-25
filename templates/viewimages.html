@@ -1,0 +1,34 @@
+﻿<html>
+<head>
+    <title>Finstagram</title>
+</head>
+<body>
+    <h1>Image Gallery</h1>
+    <div>
+        <style type="text/css">
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+        <table>
+            <th>PostId</th>
+            <th>username</th>
+            <th>Tag and Rate</th>
+            <th>More information</th>
+
+
+                {% for image in photos %}
+                <tr>
+                    <td>{{image.photoID}}</td>
+                    <td>{{image.photoPoster}}</td>
+                    <td><a href="/likeandrate/{{image.photoID}}">like and rate</a></td>
+                    <td><a href="/images/{{image.photoID}}">click here</a></td>
+
+                </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+    <a href="/home">Home</a>
+</body>
+</html>

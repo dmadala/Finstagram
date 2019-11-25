@@ -1,0 +1,81 @@
+﻿<html>
+<head>
+    <title>Finstagram</title>
+</head>
+<body>
+
+    {% for image in photo %}
+    <h1>Caption: {{image.caption}}</h1>
+    <h2>Username: {{image.photoPoster}}</h2>
+
+
+    <img src="/image/{{image.filePath}}" width='300'><br>
+    <p>Name: {{image.firstname}} {{image.lastname}}</p>
+    <p> image ID: {{image.photoID}}</p>
+
+    <p>Date posted: {{image.postingdate}}</p>
+
+
+
+    <p>list of people who liked and rated: </p>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <table>
+        <th>username</th>
+        <th>rating</th>
+
+        {% for like in likes %}
+        <tr>
+            <td>{{like.username}}</td>
+            <td>{{like.rating}}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    </br>
+    </br>
+
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <p>list of people tagged: </p>
+    <table>
+        <th>tagged</th>
+
+        {% for tag in tags %}
+        <tr>
+            <td>{{tag.username}}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+    </br>
+    </br>
+
+
+    <h4>Rate the Image</h4>
+    <form action="/likeandrate/{{image.photoID}}" method="post" enctype="multipart/form-data" style={{hider}}>
+        check box to LIKE the photo: 
+        <input type="radio" name="options" value="like" />
+        <p>Enter any number from 1 to 5: </p>
+        <input type="text" name="rating" placeholder="rating" required />
+        <input type="submit" name="like" />
+    </form>
+    </br>
+    </br>
+
+    {% endfor %}
+    {% if message %}
+    {{ message }}
+    {% endif %}
+    <a href="/home">Go back</a>
+</body>
+</html>
