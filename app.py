@@ -103,12 +103,11 @@ def home():
 def upload_photo():
     return render_template("uploadphotos.html")
 
-
+# **FEATURE 3**
 #route to upload image
 #this function uploads an image
 @app.route("/uploadImage", methods=["POST"])
 def upload_image():
-    
     if request.files:
         image_file = request.files.get("imageToUpload", "")
         image_name = image_file.filename
@@ -121,10 +120,11 @@ def upload_image():
             if requestData.getlist('allFollowers') != []:
                 allFollowers = 1
             image_file.save(filepath)
-            query = "INSERT INTO Photo (postingdate, filepath, caption, photoPoster, allFollowers) VALUES (%s, %s, %s, %s, %s)"
+            query1 = "INSERT INTO Photo (postingdate, filepath, caption, photoPoster, allFollowers) VALUES (%s, %s, %s, %s, %s)"
+            query2 = "SELECT photoID FROM Photo WHERE filepath = %s AND postingdate = %s"
             with conn.cursor() as cursor:
-                cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, session["username"], allFollowers))
-                print("done");
+                cursor.execute(query1, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, session["username"], allFollowers))
+                cursor.execute(query2, (image_name, time.strftime('%Y-%m-%d %H:%M:%S')))
                 data = cursor.fetchall()
                 conn.commit()
             message = "Image has been successfully uploaded."
@@ -137,7 +137,7 @@ def upload_image():
 
 @app.route("/tag/<photoID>", methods=["GET", "POST"])
 def tag(photoID):
-    
+    print("inside tag function")    #TEST CODE
     cursor = conn.cursor() 
     query = "INSERT INTO Tagged(username, photoID) VALUES(%s, %s)"
     #add a check to see if username is valid and if the tag has been accepted
@@ -146,15 +146,14 @@ def tag(photoID):
     conn.commit()
     cursor.close()
     
-    return render_template("home.html")
+    return home()
     
-
+# **FEATURE 1**
 @app.route("/images", methods=["GET", "POST"])
-
 def images():
     #for part 4, add group and follower checks
     cursor = conn.cursor()
-    query = "SELECT photoID, photoPoster FROM Photo"
+    query = "SELECT photoID, photoPoster FROM Photo ORDER BY postingdate DESC"
     cursor.execute(query)
     data = cursor.fetchall()
     cursor.close()
@@ -162,12 +161,12 @@ def images():
 
     return render_template("viewimages.html", photos=data)
 
-
+# **FEATURE 2**
 @app.route("/images/<photoID>", methods=["GET", "POST"])
 def image(photoID):
     
     cursor = conn.cursor()
-    query = "SELECT * FROM (Photo as p1) JOIN (Person as p2) WHERE p1.photoID = %s AND p1.photoPoster = p2.username"
+    query = "SELECT * FROM (Photo as photo) JOIN (Person as person) WHERE photo.photoID = %s AND photo.photoPoster = person.username"
     cursor.execute(query, photoID)
     data = cursor.fetchall()
     cursor.close()

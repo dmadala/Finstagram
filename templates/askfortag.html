@@ -1,0 +1,19 @@
+<html>
+<head>
+    <title>Finstagram</title>
+</head>
+<body>
+
+    {% if message %}
+    {{ message }}
+    {% endif %}
+
+    <form action="/tag" method="post" enctype="multipart/form-data" style={{hider}}>
+	<p>If you want to tag anyone in this post, click the tag button. Otherwise, press the home button.</p>
+	<input type="submit" value="Tag">
+    </form>
+    
+
+    <a href="/home">Go home</a>
+</body>
+</html>
