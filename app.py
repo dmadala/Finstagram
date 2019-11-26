@@ -137,7 +137,6 @@ def upload_image():
 
 @app.route("/tag/<photoID>", methods=["GET", "POST"])
 def tag(photoID):
-    print("inside tag function")    #TEST CODE
     cursor = conn.cursor() 
     query = "INSERT INTO Tagged(username, photoID) VALUES(%s, %s)"
     #add a check to see if username is valid and if the tag has been accepted
@@ -157,8 +156,6 @@ def images():
     cursor.execute(query)
     data = cursor.fetchall()
     cursor.close()
-
-
     return render_template("viewimages.html", photos=data)
 
 # **FEATURE 2**
