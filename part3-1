@@ -1,0 +1,5 @@
+SELECT SharedWith.photoID AS photoID
+FROM BelongTo
+JOIN Person on BelongTo.member_username = Person.username
+JOIN SharedWith on BelongTo.owner_username = SharedWith.groupOwner
+WHERE BelongTo.member_username == 'TestUser'   

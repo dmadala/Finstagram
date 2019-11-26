@@ -17,8 +17,6 @@ CREATE TABLE Friendgroup(
 );
 
 
-
-
 CREATE TABLE Photo (
     photoID int AUTO_INCREMENT, 
     postingdate DATETIME,
@@ -29,8 +27,6 @@ CREATE TABLE Photo (
     PRIMARY KEY (photoID),
     FOREIGN KEY(photoPoster) REFERENCES Person(username)
 );
-
-
 
 
 CREATE TABLE Likes (
