@@ -1,0 +1,18 @@
+﻿<html>
+<head>
+    <title>FINSTAGRAM!</title>
+</head>
+<body>
+    <h1>Search by Username </h1>
+    <form action="/findUsername" method="post" enctype="multipart/form-data" style={{hider}}>
+        <input type="text" name="username" placeholder="username" required />
+        <input type="submit" name="submit" />
+    </form>
+
+    {% if message %}
+    {{ message }}
+    {% endif %}
+
+    <a href="/home">Go back</a>
+</body>
+</html>

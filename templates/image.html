@@ -63,13 +63,19 @@
 
     <h4>Rate the Image</h4>
     <form action="/likeandrate/{{image.photoID}}" method="post" enctype="multipart/form-data" style={{hider}}>
-        check box to LIKE the photo: 
+        check box to LIKE the photo:
         <input type="radio" name="options" value="like" />
         <p>Enter any number from 1 to 5: </p>
         <input type="text" name="rating" placeholder="rating" required />
         <input type="submit" name="like" />
     </form>
     </br>
+
+    <h4>Comment</h4>
+    <form action="/comment/{{image.photoID}}" method="post" enctype="multipart/form-data" style={{hider}}>
+        <input type="text" name="comment" placeholder="comment" required />
+        <input type="submit" name="like" />
+    </form>
     </br>
 
     {% endfor %}

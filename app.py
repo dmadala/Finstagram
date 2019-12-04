@@ -1,5 +1,5 @@
 #Import Flask Library
-from flask import Flask, render_template, request, session, url_for, redirect, send_file
+from flask import Flask, render_template, request, session, url_for, redirect
 import pymysql.cursors
 import os
 import time
@@ -188,6 +188,7 @@ def image(photoID):
 
 @app.route("/likeandrate/<photoID>", methods=["GET", "POST"])
 def likeandrate(photoID):
+    
     username = session['username']
     cursor = conn.cursor();
     rating = request.form['rating']
@@ -195,11 +196,63 @@ def likeandrate(photoID):
     cursor.execute(query, (username, photoID, rating))
     conn.commit()
     cursor.close()
-    
-    return render_template("home.html")
+
+    return
+    #return render_template("home.html")
     #return redirect(url_for('/images'))
+
+#extra feature 1: comment on the photo
+@app.route("/comment/<photoID>", methods=["GET", "POST"])
+def comment(photoID):
+    
+    username = session['username']
+    cursor = conn.cursor()
+    comment = request.form['comment']
+    query ='INSERT INTO Comments (username, photoID, comment) VALUES(%s, %s, %s)'
+    cursor.execute(query ,(username, photoID, comment))
+    conn.commit()
+    cursor.close()
+    return
+#extra feature 2: search by username
+@app.route("/username", methods=["GET", "POST"])
+def username():
+    return render_template("findUsername.html")
+
+
+@app.route("/findUsername", methods=["GET", "POST"])
+def findUsername():
+    poster = request.form['username']
+    cursor = conn.cursor()
+    query = "SELECT * FROM Photo WHERE photoPoster = %s"
+    cursor.execute(query, poster)
+    data = cursor.fetchall()
+    cursor.close()
+    if (data):
+        return render_template("postByUsername.html", photos = data)
+    else:
+        return render_template("findUsername.html", message = "couldn't find username")
+    
+    
+@app.route("/tagged", methods=["GET", "POST"])
+def tagged():
+    return render_template("findTag.html")
+
+
+@app.route("/findTag", methods=["GET", "POST"])
+def findTag():
+    tagged = request.form['username']
+    cursor = conn.cursor()
+    query = "SELECT photoID FROM Tagged WHERE username = %s"
+    cursor.execute(query, tagged)
+    data = cursor.fetchall()
+    cursor.close()
+    if (data):
+        return render_template("postByTag.html", photos = data)
+    else:
+        return render_template("findTag.html", message = "couldn't find username")
     
 
+#log out of the session
 @app.route('/logout')
 def logout():
     session.pop('username')
