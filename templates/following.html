@@ -3,7 +3,7 @@
     <title>Finstagram</title>
 </head>
 <body>
-    <h1>Image Gallery</h1>
+    <h1>People you are following</h1>
     <div>
         <style type="text/css">
             table, th, td {
@@ -11,22 +11,17 @@
             }
         </style>
         <table>
-            <th>PostId</th>
             <th>username</th>
-            <th>More information</th>
-
-
-                {% for image in photos %}
+                {% for entry in follow %}
                 <tr>
-                    <td>{{image.photoID}}</td>
-                    <td>{{image.photoPoster}}</td>
-                    <td><a href="/images/{{image.photoID}}">click here</a></td>
-
+                    <td>{{entry.username_followed}}</td>
+		    <td><a href="/unfollow/{{entry.username_followed}}">unfollow</a></td>
                 </tr>
+            	{% endfor %}
 
-            {% endfor %}
         </table>
     </div>
+    <h1></h1>
     <a href="/home">Home</a>
 </body>
 </html>

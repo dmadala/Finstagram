@@ -12,7 +12,7 @@
     {% for p in photo %}
     <form action="/tag/{{p.photoID}}" method="post" enctype="multipart/form-data" style={{hider}}>
     {% endfor %}
-        <p>Enter usernames to tag, one at a time</p>
+        <p>Enter usernames to tag separated by a comma with no space. ( eg. simone,divya)</p>
         <input type="text" name="username" placeholder="username" />
         <input type="submit" value="submit" onclick="/home">
     </form>

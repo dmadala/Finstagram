@@ -47,11 +47,13 @@
     </style>
     <p>list of people tagged: </p>
     <table>
-        <th>tagged</th>
+        <th>username</th>
+	<th>first and last name</th>
 
         {% for tag in tags %}
         <tr>
             <td>{{tag.username}}</td>
+	    <td> {{tag.firstName}} {{tag.lastName}}</td>
         </tr>
 
         {% endfor %}
@@ -71,12 +73,6 @@
     </form>
     </br>
 
-    <h4>Comment</h4>
-    <form action="/comment/{{image.photoID}}" method="post" enctype="multipart/form-data" style={{hider}}>
-        <input type="text" name="comment" placeholder="comment" required />
-        <input type="submit" name="like" />
-    </form>
-    </br>
 
     {% endfor %}
     {% if message %}
