@@ -197,8 +197,8 @@ def likeandrate(photoID):
     username = session['username']
     cursor = conn.cursor();
     rating = request.form['rating']
-    query = 'INSERT INTO Likes (username, photoID, rating) VALUES(%s, %s, %s)'
-    cursor.execute(query, (username, photoID, rating))
+    query = "INSERT INTO Likes (username, photoID, liketime, rating) VALUES(%s, %s, %s, %s)"
+    cursor.execute(query, (username, photoID, time.strftime('%Y-%m-%d %H:%M:%S'), rating))
     conn.commit()
     cursor.close()
     return redirect(url_for("images"))
