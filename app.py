@@ -208,7 +208,7 @@ def likeandrate(photoID):
 def username():
     return render_template("findUsername.html")
 
-
+#extra feature 2: search by username (Divya Madala dm3980)
 @app.route("/findUsername", methods=["GET", "POST"])
 def findUsername():
     poster = request.form['username']
@@ -310,7 +310,7 @@ def followRequestAction(username, status):
 def tagged():
     return render_template("findTag.html")
 
-
+#extra feature 1: search by tag (Divya Madala dm3980)
 @app.route("/findTag", methods=["GET", "POST"])
 def findTag():
     tagged = request.form['username']
